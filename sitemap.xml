@@ -3,19 +3,87 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://codealongwithron.github.io/blog/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/c#/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/categories/c#/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://codealongwithron.github.io/categories/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://codealongwithron.github.io/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
   </url>
   
   <url>
-    <loc>https://codealongwithron.github.io/contact/</loc>
+    <loc>https://codealongwithron.github.io/tags/dependency-injection/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/moq/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://codealongwithron.github.io/tags/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/unit-testing/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/categories/unit-testing/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/xunit/</loc>
+    <lastmod>2020-09-19T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/.net-core/</loc>
+    <lastmod>2020-08-21T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/categories/.net-core/</loc>
+    <lastmod>2020-08-21T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/about/</loc>
+    <lastmod>2020-08-21T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/blog/you-too-can-become-medior-dotnet-developer-following-this-course/</loc>
+    <lastmod>2020-08-21T20:55:12+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/contact/</loc>
   </url>
   
 </urlset>

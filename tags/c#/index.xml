@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C# on Code along with Ron</title>
+    <link>https://codealongwithron.github.io/tags/c#/</link>
+    <description>Recent content in C# on Code along with Ron</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <lastBuildDate>Sat, 19 Sep 2020 20:55:12 +0200</lastBuildDate>
+    
+	<atom:link href="https://codealongwithron.github.io/tags/c#/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Learn how to write testable code in C# in only 15 minutes</title>
+      <link>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</link>
+      <pubDate>Sat, 19 Sep 2020 20:55:12 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</guid>
+      <description>&lt;h2 id=&#34;why-you-should-want-to-unit-test&#34;&gt;Why you should want to unit test&lt;/h2&gt;
+&lt;p&gt;As an application grows, it becomes harder and harder to do manual testing. At some point the effort that goes into it simply becomes too much. The solution to this problem is automated testing. There are various types of automated tests, but in this course we will focus on unit tests.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

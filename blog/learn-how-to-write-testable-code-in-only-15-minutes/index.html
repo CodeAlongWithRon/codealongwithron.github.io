@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Learn how to write testable code in C# in only 15 minutes - Code along with Ron</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Learn how to write testable code in C# in only 15 minutes">
+<meta itemprop="description" content="In this course I will teach you how to write code that is easy to test and how to create the tests themselves. And even better: it will only take you 15 minutes!">
+<meta itemprop="datePublished" content="2020-09-19T20:55:12+02:00" />
+<meta itemprop="dateModified" content="2020-09-19T20:55:12+02:00" />
+<meta itemprop="wordCount" content="1245">
+
+
+
+<meta itemprop="keywords" content="C#,Unit testing,Dependency injection,XUnit,Moq," />
+<meta property="og:title" content="Learn how to write testable code in C# in only 15 minutes" />
+<meta property="og:description" content="In this course I will teach you how to write code that is easy to test and how to create the tests themselves. And even better: it will only take you 15 minutes!" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/" />
+<meta property="article:published_time" content="2020-09-19T20:55:12+02:00" />
+<meta property="article:modified_time" content="2020-09-19T20:55:12+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Learn how to write testable code in C# in only 15 minutes"/>
+<meta name="twitter:description" content="In this course I will teach you how to write code that is easy to test and how to create the tests themselves. And even better: it will only take you 15 minutes!"/>
+<meta name="twitter:site" content="@example"/>
+<link rel="stylesheet" href="/css/bundle.min.d9e04ae08c9b3049b766dbd4aeab7d862c5ea1d13679b621490e0f5df5507497.css" integrity="sha256-2eBK4IybMEm3ZtvUrqt9hixeodE2ebYhSQ4PXfVQdJc="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          Blog
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+        
+          
+          <a href="/contact/" class="nav link"><i class='far fa-envelope'></i> Contact</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f&amp;title=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f&amp;title=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f&amp;description=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://codealongwithron.github.io/img/main/logo.jpg" class="circle" width="100" alt="Code along with Ron" /></a>
+  <header>
+    <h1>Code along with Ron</h1>
+  </header>
+  <main>
+    <p>Join me on my journey to become a freelance developer</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/pacollins/hugo-future-imperfect-slim" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+<li><a href="//flickr.com/photos/example" target="_blank" rel="noopener" title="Flickr" class="fab fa-flickr"></a></li>
+
+
+
+
+<li><a href="//linkedin.com/in/example" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+<li><a href="//linkedin.com/company/examplebusiness" target="_blank" rel="noopener" title="LinkedIn Company" class="fab fa-linkedin"></a></li>
+
+
+
+<li><a href="//facebook.com/example" target="_blank" rel="noopener" title="Facebook" class="fab fa-facebook"></a></li>
+<li><a href="//reddit.com/user/example" target="_blank" rel="noopener" title="Reddit" class="fab fa-reddit"></a></li>
+
+
+
+
+
+
+
+<li><a href="//instagram.com/example" target="_blank" rel="noopener" title="Instagram" class="fab fa-instagram"></a></li>
+
+<li><a href="//twitter.com/example" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+<li><a href="//pinterest.com/example" target="_blank" rel="noopener" title="Pinterest" class="fab fa-pinterest-p"></a></li>
+<li><a href="//telegram.me/example" target="_blank" rel="noopener" title="telegram" class="fab fa-telegram"></a></li>
+
+
+
+<li><a href="//researchgate.net/profile/example" target="_blank" rel="noopener" title="Research Gate"><i class="ai ai-researchgate"></i></a></li>
+<li><a href="//keybase.io/example" target="_blank" rel="noopener" title="keybase" class="fab fa-keybase"></a></li>
+<li><a href="//example.com/@example" target="_blank" rel="noopener" title="mastodon" class="fab fa-mastodon"></a></li>
+<li><a href="mailto:example" target="_blank" title="Email" class="far fa-envelope"></a></li>
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/learn-how-to-write-testable-code-in-only-15-minutes/">Learn how to write testable code in C# in only 15 minutes</a></h2>
+    
+    
+      <p>In this course I will teach you how to write code that is easy to test and how to create the tests themselves. And even better: it will only take you 15 minutes!</p>
+    
+  </div>
+  <div class="meta">
+    <time datetime="2020-09-19 20:55:12 &#43;0200 CEST">September 19, 2020</time>
+    
+    <p>6-Minute Read</p>
+  </div>
+</header>
+
+    <div id="socnet-share">
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f&amp;title=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f&amp;title=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f&amp;description=Learn%20how%20to%20write%20testable%20code%20in%20C%23%20in%20only%2015%20minutes" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2flearn-how-to-write-testable-code-in-only-15-minutes%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </div>
+    <div class="content">
+      
+      <h2 id="why-you-should-want-to-unit-test">Why you should want to unit test</h2>
+<p>As an application grows, it becomes harder and harder to do manual testing. At some point the effort that goes into it simply becomes too much. The solution to this problem is automated testing. There are various types of automated tests, but in this course we will focus on unit tests.</p>
+<p>In most cases unit tests are written by developers. Unit tests are called white box tests, because the developer knows the internal working of the application. The main benefit of unit tests is that they are very fast.</p>
+<h2 id="tightly-coupled-code-is-not-suited-for-unit-testing">Tightly coupled code is not suited for unit testing</h2>
+<p>One thing that is essential to unit testing is that the code must be written in a way that allows it to be tested. I will start off by showing an example of a class that was not written with testability in mind:</p>
+<pre><code>public class ApiMonitoringRepository
+{
+   private static readonly HttpClient _httpClient = new HttpClient();
+
+   public async Task&lt;HealthStatus&gt; IsHealthyAsync()
+   {
+      var response = await _httpClient.GetAsync(&quot;https://www.api.com&quot;);
+
+      if (response.IsSuccessStatusCode)
+      {
+         return HealthStatus.Healthy;
+      }
+
+      return HealthStatus.Unhealthy;
+   }
+}
+
+public enum HealthStatus
+{
+   Healthy,
+   Unhealthy
+}
+</code></pre>
+<p>What the method within this class does is performing a get request to an api. If the response status code is 2xx it returns a healthy status and otherwise it returns unhealthy. Pretty simple and purely looking at the functionality, it does what it&rsquo;s supposed to do. But what if we want to create unit tests for the two existing scenario&rsquo;s.</p>
+<p>Because the class is tightly coupled to the HttpClient, it is impossible for us to have any control over the response of the get call. What we want to do, is move the execution of the get request to another class:</p>
+<pre><code>public class ApiMonitoringClient
+{
+   private static readonly HttpClient _httpClient = new HttpClient();
+
+   public async Task&lt;HttpResponseMessage&gt; GetResponseAsync()
+   {
+      return await _httpClient.GetAsync(&quot;https://www.api.com&quot;);
+   }
+}
+</code></pre>
+<p>We can then update the ApiMonitoringRepository to make it call the ApiMonitoringClient instead of directly using the HttpClient:</p>
+<pre><code>public class ApiMonitoringRepository
+{
+   private static readonly ApiMonitoringClient _client = new ApiMonitoringClient();
+
+   public async Task&lt;HealthStatus&gt; IsHealthyAsync()
+   {
+      var response = await _client.GetResponseAsync();
+
+      if (response.IsSuccessStatusCode)
+      {
+         return HealthStatus.Healthy;
+      }
+
+      return HealthStatus.Unhealthy;
+   }
+}
+</code></pre>
+<p>Although we have improved the separation of the code, we are still tightly coupled. Before the coupling was with the HttpClient and now it is with the newly created ApiMonitoringClient. One thing to look out for when searching for tight coupling, is the creation of new objects. Both in the current as in the previous version of the repository an instance of an object is created by using the <em>new</em> keyword.</p>
+<h2 id="how-to-make-the-code-loosely-coupled">How to make the code loosely coupled</h2>
+<p>Now instead of creating an instance of the ApiMonitoringClient from within the repository, we will make use of dependency injection. In order to fully benefit from dependency injection, we want to make use of interfaces instead of concrete classes. Using interfaces makes it possible to supply mocks to the consumer of the interface. This gives us the control over the dependency that we are currently missing in our repository. The interface looks as follows:</p>
+<pre><code>public interface IApiMonitoringClient
+{
+   Task&lt;HttpResponseMessage&gt; GetResponseAsync();
+}
+</code></pre>
+<p>And the ApiMonitoringClient now implements the interface:</p>
+<pre><code>public class ApiMonitoringClient : IApiMonitoringClient
+</code></pre>
+<p>We can now inject the newly created interface into the repository, resulting in the following variable and constructor changes:</p>
+<pre><code>private readonly IApiMonitoringClient _client;
+
+public ApiMonitoringRepository(IApiMonitoringClient client)
+{
+   _client = client;
+}
+</code></pre>
+<p>If we created an actual application, we would have to register ApiMonitoringClient as the default implementation for the IApiMonitoringClient in a dependency injection container. Because the focus of this course is on unit testing, I will skip that part and continue with the creation of the unit tests.</p>
+<h2 id="creating-the-unit-tests">Creating the unit tests</h2>
+<p>My favorite unit testing framework is XUnit and my mocking framework of choice is Moq. You will see these frameworks being used in the code examples below. For the repository there are two scenario&rsquo;s that I would like to test:</p>
+<ol>
+<li>If the client returns a non success status code, does the repository return HealthStatus Unhealty?</li>
+<li>If the client returns a success status code, does the repository return HealthStatus Healthy?</li>
+</ol>
+<p><strong>The notation that I use for the name of my unit tests is as follows:</strong></p>
+<pre><code>SubjectUnderTest_TestScenario_ExpectedResult
+</code></pre>
+<p>So in case of the first test scenario that I defined, I would name the test:</p>
+<pre><code>IsHealthy_ClientResponseWithNonSuccessStatusCode_ReturnsUnhealthyStatus
+</code></pre>
+<p>Next I start with following template for the test:</p>
+<pre><code>[Fact]
+public async Task IsHealthy_ClientResponseWithSuccessStatusCode_ReturnsHealthyStatus()
+{
+   // Arrange
+
+   // Act
+
+   // Assert
+}
+</code></pre>
+<p><em>Fact</em> is an attribute that tells the test runner that it is a test that should be run. <em>Arrange</em> is where we organise whatever is needed before we run our tests. Usually this involves the generation of mocks. <em>Act</em> is where we perform the test. And lastly <em>Assert</em> is where we verify that the outcome of the test matches the expectation that we have.</p>
+<p>Without further ado, let&rsquo;s create a unit test for our first test scenario:</p>
+<pre><code>[Fact]
+public async Task IsHealthy_ClientResponseWithSuccessStatusCode_ReturnsHealthyStatus()
+{
+   // Arrange
+   var client = new Mock&lt;IApiMonitoringClient&gt;();
+   var responseMessage = new HttpResponseMessage(HttpStatusCode.BadRequest);
+
+   client
+      .Setup(c =&gt; c.GetResponseAsync())
+      .ReturnsAsync(responseMessage);
+
+   var repository = new ApiMonitoringRepository(client.Object);
+
+   // Act
+   var result = await repository.IsHealthyAsync();
+
+   // Assert
+   Assert.Equal(HealthStatus.Unhealthy, result);
+}
+</code></pre>
+<h3 id="arrange">Arrange</h3>
+<p>What we want to achieve with this test, is to see if the repository correctly handles different responses from the client. In order to do this, we want to have control over the response from the client. We get this control, by creating a mock for the client. Once we have the mock, we create the response message that we want it to return. Because we want to test the scenario of a non success status code, we create a response message with a Bad Request status code. Although I chose Bad Request in this example, any other non success status code (like Internal Server Error for example) would have led to the same result.</p>
+<p>Next we configure the mock by specifying which call we want to setup. In this case it is the <em>GetResponseAsync</em> method of the client. Then we specify what we want the method to return. That is the response message that we defined earlier.</p>
+<p>The only thing remaining is to create an instance of the repository that we are testing. We do this by calling its constructor and providing the mock as argument.</p>
+<h3 id="act">Act</h3>
+<p>This one is easy. We simply execute the <em>IsHealthyAsync</em> method and assign its result to a variable.</p>
+<h3 id="assert">Assert</h3>
+<p>Last but not least, we verify that the value of the <em>result</em> variable equals HealthStatus Unhealthy.</p>
+<p>Running the test results in our first passed test!</p>
+<h2 id="the-next-test-is-up-to-you">The next test is up to you</h2>
+<p>At this point, you should have enough knowledge to write a unit test for the second scenario. So instead of me showing you the code for this scenario, I would like to challenge you to write the test yourself. Think about the goal of the test, what you need to arrange to achieve this goal and then simply act and assert.</p>
+<p>Feel free to share the test you have written with me. I&rsquo;m curious to see what you&rsquo;ve managed to create!</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Obviously there is more to unit testing than what I provided in this course. Regardless of that you will be able to test the majority of your code with the tips and techniques you learned in this course. If you have questions regarding unit testing that have not been answered in this course, I would love for you to reach out to me in the comment section below.</p>
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/unit-testing/">Unit testing</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/unit-testing/">Unit testing</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/dependency-injection/">Dependency injection</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/xunit/">XUnit</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/moq/">Moq</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+  <article class="post">
+    
+    <div>
+      <h2 id="say-something">Say Something</h2>
+        <form id="comment-form" class="new-comment" method="POST">
+          
+          <h3 class='reply-notice hidden'>
+            <span class='reply-name'></span>
+          </h3>
+
+          
+          <input type="hidden" name="options[entryId]" value="ccc733e86b95f2699ccef9a6b2945238">
+          <input type='hidden' name='fields[replyThread]' value=''>
+          <input type='hidden' name='fields[replyID]' value=''>
+          <input type='hidden' name='fields[replyName]' value=''>
+
+          
+          <input required name='fields[name]' type='text' placeholder='Your Name'>
+          <input name='fields[website]' type='text' placeholder='Your Website'>
+          <input required name='fields[email]' type='email' placeholder='Your Email'>
+          <textarea required name='fields[body]' placeholder='Your Message' rows='10'></textarea>
+
+          
+          
+
+          
+          <div class='submit-notice'>
+            <strong class='submit-notice-text submit-success hidden'>Thanks for your comment! It will be shown on the site once it has been approved.</strong>
+            <strong class='submit-notice-text submit-failed hidden'>Sorry, there was an error with your submission. Please make sure all required fields have been completed and try again.</strong>
+          </div>
+
+          
+          <input type='submit' value='Submit' class='button'>
+          <input type='submit' value='Submitted' class='hidden button' disabled>
+          <input type='reset' value='Reset' class='button'>
+        </form>
+    </div>
+
+    
+    <div>
+      <h2>Comments</h2>
+    </div>
+  </article>
+
+
+  
+  <div class="pagination">
+    
+    
+      <a href="/blog/you-too-can-become-medior-dotnet-developer-following-this-course/" class="button right"><span>You too can become a medior .net developer by following this course</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        
+      </ul>
+  
+  <p class="copyright">
+    © 2020 Code along with Ron
+      <br>
+    
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.5955090a3253deadcd66071270aa2274dabe15ffc97094cec252d87b6f3f00bf.js" integrity="sha256-WVUJCjJT3q3NZgcScKoidNq&#43;Ff/JcJTOwlLYe28/AL8="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>
