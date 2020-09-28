@@ -6,9 +6,46 @@
     <description>Recent content in Tags on Code along with Ron</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
+    <lastBuildDate>Mon, 28 Sep 2020 16:45:24 +0200</lastBuildDate>
     
 	<atom:link href="https://codealongwithron.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>.NET Core</title>
+      <link>https://codealongwithron.github.io/tags/.net-core/</link>
+      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/tags/.net-core/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>C#</title>
+      <link>https://codealongwithron.github.io/tags/c#/</link>
+      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/tags/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>HttpClient</title>
+      <link>https://codealongwithron.github.io/tags/httpclient/</link>
+      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/tags/httpclient/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>IHttpClientFactory</title>
+      <link>https://codealongwithron.github.io/tags/ihttpclientfactory/</link>
+      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/tags/ihttpclientfactory/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

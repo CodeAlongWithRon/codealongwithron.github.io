@@ -6,19 +6,23 @@
     <description>Recent content in C# on Code along with Ron</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 19 Sep 2020 20:55:12 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 28 Sep 2020 16:45:24 +0200</lastBuildDate>
     
 	<atom:link href="https://codealongwithron.github.io/categories/c#/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Learn how to write testable code in C# in only 15 minutes</title>
-      <link>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</link>
-      <pubDate>Sat, 19 Sep 2020 20:55:12 +0200</pubDate>
+      <title>You&#39;ve been using the HttpClient incorrectly</title>
+      <link>https://codealongwithron.github.io/blog/youve-been-using-the-httpclient-incorrectly/</link>
+      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
       
-      <guid>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</guid>
-      <description>&lt;h2 id=&#34;why-you-should-want-to-unit-test&#34;&gt;Why you should want to unit test&lt;/h2&gt;
-&lt;p&gt;As an application grows, it becomes harder and harder to do manual testing. At some point the effort that goes into it simply becomes too much. The solution to this problem is automated testing. There are various types of automated tests, but in this course we will focus on unit tests.&lt;/p&gt;</description>
+      <guid>https://codealongwithron.github.io/blog/youve-been-using-the-httpclient-incorrectly/</guid>
+      <description>&lt;h2 id=&#34;why-the-httpclient-confuses-us&#34;&gt;Why the HttpClient confuses us&lt;/h2&gt;
+&lt;p&gt;The reason that the HttpClient is being misused as often as it is, is because of two reasons:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We&amp;rsquo;ve been taught to instantiate disposable objects in a using statement&lt;/li&gt;
+&lt;li&gt;The majority of the tutorials teach us the wrong way&lt;/li&gt;
+&lt;/ol&gt;</description>
     </item>
     
   </channel>

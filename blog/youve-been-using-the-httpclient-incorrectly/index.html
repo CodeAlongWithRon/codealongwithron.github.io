@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>You&#39;ve been using the HttpClient incorrectly - Code along with Ron</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?v=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v=1">
+  <link rel="manifest" href="/favicon/site.webmanifest?v=1">
+  
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg?v=1" color="#ffffff">
+    <link rel="shortcut icon" href="/favicon/favicon.ico?v=1">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml?v=1">
+  
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="You&#39;ve been using the HttpClient incorrectly">
+<meta itemprop="description" content="Regardless of the project that you are working on, I am sure that at one point or another you have used an HttpClient. Another thing that I am sure of is that you have been using it incorrectly. Let me show you the correct way of using the HttpClient.">
+<meta itemprop="datePublished" content="2020-09-28T16:45:24+02:00" />
+<meta itemprop="dateModified" content="2020-09-28T16:45:24+02:00" />
+<meta itemprop="wordCount" content="749">
+
+
+
+<meta itemprop="keywords" content="C#,.NET Core,HttpClient,IHttpClientFactory," />
+<meta property="og:title" content="You&#39;ve been using the HttpClient incorrectly" />
+<meta property="og:description" content="Regardless of the project that you are working on, I am sure that at one point or another you have used an HttpClient. Another thing that I am sure of is that you have been using it incorrectly. Let me show you the correct way of using the HttpClient." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codealongwithron.github.io/blog/youve-been-using-the-httpclient-incorrectly/" />
+<meta property="article:published_time" content="2020-09-28T16:45:24+02:00" />
+<meta property="article:modified_time" content="2020-09-28T16:45:24+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="You&#39;ve been using the HttpClient incorrectly"/>
+<meta name="twitter:description" content="Regardless of the project that you are working on, I am sure that at one point or another you have used an HttpClient. Another thing that I am sure of is that you have been using it incorrectly. Let me show you the correct way of using the HttpClient."/>
+<link rel="stylesheet" href="/css/bundle.min.d9e04ae08c9b3049b766dbd4aeab7d862c5ea1d13679b621490e0f5df5507497.css" integrity="sha256-2eBK4IybMEm3ZtvUrqt9hixeodE2ebYhSQ4PXfVQdJc="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          Blog
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+        
+          
+          <a href="/contact/" class="nav link"><i class='far fa-envelope'></i> Contact</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=You%27ve%20been%20using%20the%20HttpClient%20incorrectly&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f&amp;title=You%27ve%20been%20using%20the%20HttpClient%20incorrectly" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f&amp;title=You%27ve%20been%20using%20the%20HttpClient%20incorrectly" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f&amp;description=You%27ve%20been%20using%20the%20HttpClient%20incorrectly" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://codealongwithron.github.io/img/main/logo.jpg" class="circle" width="100" alt="Code along with Ron" /></a>
+  <header>
+    <h1>Code along with Ron</h1>
+  </header>
+  <main>
+    <p>Teaching what I learned and learning as I teach</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/CodeAlongWithRon" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//youtube.com/channel/UCJXeiLKL3B56LhdVUq8iIlw" target="_blank" rel="noopener" title="YouTube" class="fab fa-youtube"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/youve-been-using-the-httpclient-incorrectly/">You&#39;ve been using the HttpClient incorrectly</a></h2>
+    
+    
+      <p>Regardless of the project that you are working on, I am sure that at one point or another you have used an HttpClient. Another thing that I am sure of is that you have been using it incorrectly. Let me show you the correct way of using the HttpClient.</p>
+    
+  </div>
+  <div class="meta">
+    <time datetime="2020-09-28 16:45:24 &#43;0200 CEST">September 28, 2020</time>
+    
+    <p>4-Minute Read</p>
+  </div>
+</header>
+
+    <div id="socnet-share">
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=You%27ve%20been%20using%20the%20HttpClient%20incorrectly&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f&amp;title=You%27ve%20been%20using%20the%20HttpClient%20incorrectly" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f&amp;title=You%27ve%20been%20using%20the%20HttpClient%20incorrectly" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f&amp;description=You%27ve%20been%20using%20the%20HttpClient%20incorrectly" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fyouve-been-using-the-httpclient-incorrectly%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </div>
+    <div class="content">
+      
+      <h2 id="why-the-httpclient-confuses-us">Why the HttpClient confuses us</h2>
+<p>The reason that the HttpClient is being misused as often as it is, is because of two reasons:</p>
+<ol>
+<li>We&rsquo;ve been taught to instantiate disposable objects in a using statement</li>
+<li>The majority of the tutorials teach us the wrong way</li>
+</ol>
+<h3 id="manually-disposing-is-a-no-go">Manually disposing is a no-go</h3>
+<p>If we look at the HttpClient class, we see that it extends the HttpMessageInvoker class which in turn implements IDisposable. One thing that we learn at a pretty early stage as C# developers is that disposable objects need to be instantiated within a using statement. Doing this ensures that the object is disposed once we break out of the using statement. Although this is a good practice in the majority of situations, the HttpClient is an exception to this rule. To quote the official documentation:</p>
+<blockquote>
+<p>HttpClient is intended to be instantiated once and re-used throughout the life of an application. Instantiating an HttpClient class for every request will exhaust the number of sockets available under heavy loads. This will result in SocketException errors.</p>
+</blockquote>
+<p>If you are reading this and thinking to yourself <em>&ldquo;Ha! I am using HttpClient correctly&rdquo;</em>, can I safely assume that you have experienced these errors first hand? I sure know I did :-)</p>
+<h3 id="we-are-taught-the-wrong-way">We are taught the wrong way</h3>
+<p>The other reason the HttpClient is used incorrectly, is simply because we are taught to use it the wrong way. If you Google <em>C# HttpClient tutorial</em> the first two (non Microsoft) results teach to instantiate it within a using statement. That leads to people learning the incorrect way to use an HttpClient and they may teach a colleague or friend about this way and so on&hellip;</p>
+<p>Let&rsquo;s break this vicious circle by learning how to use the HttpClient correctly!</p>
+<h2 id="the-correct-way-to-use-an-httpclient">The correct way to use an HttpClient</h2>
+<p>Now that we&rsquo;ve seen how not to use the HttpClient, let&rsquo;s shift our focus to the correct way of using it. There are two options that I would like to describe.</p>
+<h3 id="option-1-assigning-the-httpclient-to-a-static-field">Option 1: Assigning the HttpClient to a static field</h3>
+<p>One way to use the HttpClient correctly is by assigning it to a static field. This way it adheres to the principal of instantiating it once and then re-using it throughout the life of an application. For example:</p>
+<pre><code>public class ApiMonitoringRepository
+{
+   private static readonly HttpClient _httpClient = new HttpClient();
+
+   public async Task&lt;HealthStatus&gt; IsHealthyAsync()
+   {
+      var response = await _httpClient.GetAsync(&quot;https://www.api.com&quot;);
+   }
+}
+</code></pre>
+<h3 id="option-2-using-net-cores-ihttpclientfactory">Option 2: Using .NET Core&rsquo;s IHttpClientFactory</h3>
+<p>Although the above example works fine and will not lead to the exhaustion of sockets, there is another option and that is the option that I prefer. I&rsquo;m talking about the <a href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/http-requests">IHttpClientFactory</a> that is part of .NET Core since version 2.1. This factory manages the lifecycle of HttpMessageHandler and thus avoids the socket issue.</p>
+<p>The following example shows how to create an HttpClient using the IHttpClientFactory:</p>
+<pre><code>public class ApiMonitoringRepository
+{
+    private readonly IHttpClientFactory _factory;
+
+    public ApiMonitoringRepository(IHttpClientFactory factory)
+    {
+        _factory = factory;
+    }
+
+    public async Task&lt;HealthStatus&gt; IsHealthyAsync()
+    {
+        var client = _factory.CreateClient();
+        var response = await _httpClient.GetAsync(&quot;https://www.api.com&quot;);
+    }    
+}
+</code></pre>
+<p>As you see in the example above, we are no longer instantiating an HttpClient, but we are injecting the IHttpClientFactory through the constructor. Because of this we are no longer tightly coupled to the HttpClient, which allows us to more effectively unit test our class.</p>
+<p><strong>Beware:</strong> To use the IHttpClientFactory you need to register it in your dependency injection (DI) container. If you use .NET Core&rsquo;s default DI container, you you can do so like this:</p>
+<pre><code>public class Startup
+{
+    public Startup(IConfiguration configuration)
+    {
+        Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddHttpClient();
+        // Remaining code deleted for brevity.
+</code></pre>
+<p>Besides the prevention of socket exhaustion and the possibility to use dependency injection, the IHttpClientFactory also provides other benefits. These benefits are outside the scope of this post, but if you would like to learn more I would suggest you to read the article <em><a href="https://docs.microsoft.com/en-us/dotnet/architecture/microservices/implement-resilient-applications/use-httpclientfactory-to-implement-resilient-http-requests">Use IHttpClientFactory to implement resilient HTTP requests</a></em>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The creation of a new HttpClient for every request is a flaw that can remain unnoticed for a long time. Applications with small loads may have been doing it for years, without ever experiencing problems. Just remember that once the load starts to increase, it is only a matter of time before the SocketExceptions start to appear. Be smart and correct the lifecycle management of your HttpClient. It is not difficult to do, it does not take much time and it will save you a lot of headache.</p>
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/.net-core/">.NET Core</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/.net-core/">.NET Core</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/httpclient/">HttpClient</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/ihttpclientfactory/">IHttpClientFactory</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+  <article class="post">
+    
+    <div>
+      <h2 id="say-something">Say Something</h2>
+        <form id="comment-form" class="new-comment" method="POST">
+          
+          <h3 class='reply-notice hidden'>
+            <span class='reply-name'></span>
+          </h3>
+
+          
+          <input type="hidden" name="options[entryId]" value="47798c3bef99a61fd48166fd6c312c6e">
+          <input type='hidden' name='fields[replyThread]' value=''>
+          <input type='hidden' name='fields[replyID]' value=''>
+          <input type='hidden' name='fields[replyName]' value=''>
+
+          
+          <input required name='fields[name]' type='text' placeholder='Your Name'>
+          <input name='fields[website]' type='text' placeholder='Your Website'>
+          <input required name='fields[email]' type='email' placeholder='Your Email'>
+          <textarea required name='fields[body]' placeholder='Your Message' rows='10'></textarea>
+
+          
+          
+
+          
+          <div class='submit-notice'>
+            <strong class='submit-notice-text submit-success hidden'>Thanks for your comment! It will be shown on the site once it has been approved.</strong>
+            <strong class='submit-notice-text submit-failed hidden'>Sorry, there was an error with your submission. Please make sure all required fields have been completed and try again.</strong>
+          </div>
+
+          
+          <input type='submit' value='Submit' class='button'>
+          <input type='submit' value='Submitted' class='hidden button' disabled>
+          <input type='reset' value='Reset' class='button'>
+        </form>
+    </div>
+
+    
+    <div>
+      <h2>Comments</h2>
+    </div>
+  </article>
+
+
+  
+  <div class="pagination">
+    
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        
+      </ul>
+  
+  <p class="copyright">
+    © 2020 Code along with Ron
+      <br>
+    
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.5955090a3253deadcd66071270aa2274dabe15ffc97094cec252d87b6f3f00bf.js" integrity="sha256-WVUJCjJT3q3NZgcScKoidNq&#43;Ff/JcJTOwlLYe28/AL8="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>
