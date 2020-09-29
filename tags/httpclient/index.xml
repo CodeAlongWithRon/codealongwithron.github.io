@@ -17,8 +17,8 @@
       <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
       
       <guid>https://codealongwithron.github.io/blog/youve-been-using-the-httpclient-incorrectly/</guid>
-      <description>&lt;h2 id=&#34;why-the-httpclient-confuses-us&#34;&gt;Why the HttpClient confuses us&lt;/h2&gt;
-&lt;p&gt;The reason that the HttpClient is being misused as often as it is, is because of two reasons:&lt;/p&gt;
+      <description>&lt;h2 id=&#34;why-we-use-the-httpclient-incorrectly&#34;&gt;Why we use the HttpClient incorrectly&lt;/h2&gt;
+&lt;p&gt;The HttpClient is being misused as often as it is, because of two reasons:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;We&amp;rsquo;ve been taught to instantiate disposable objects in a using statement&lt;/li&gt;
 &lt;li&gt;The majority of the tutorials teach us the wrong way&lt;/li&gt;
