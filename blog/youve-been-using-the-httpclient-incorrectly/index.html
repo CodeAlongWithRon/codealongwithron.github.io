@@ -303,7 +303,7 @@
     public async Task&lt;HealthStatus&gt; IsHealthyAsync()
     {
         var client = _factory.CreateClient();
-        var response = await _httpClient.GetAsync(&quot;https://www.api.com&quot;);
+        var response = await client.GetAsync(&quot;https://www.api.com&quot;);
     }    
 }
 </code></pre>
