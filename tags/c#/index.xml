@@ -6,10 +6,20 @@
     <description>Recent content in C# on Code along with Ron</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Sep 2020 16:45:24 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2020 15:00:46 +0200</lastBuildDate>
     
 	<atom:link href="https://codealongwithron.github.io/tags/c#/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Creating a library to unit test classes that use an HttpClient</title>
+      <link>https://codealongwithron.github.io/blog/creating-library-unit-test-classes-that-use-httpclient/</link>
+      <pubDate>Tue, 29 Sep 2020 15:00:46 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/blog/creating-library-unit-test-classes-that-use-httpclient/</guid>
+      <description>Let&amp;rsquo;s very briefly start with the basics of unit testing: in order to effectively write unit tests, we want our classes to be loosely coupled. To achieve loose coupling, we make use of dependency injection. To learn more about writing testable code, make sure to read my post Learn how to write testable code in C# in only 15 minutes.
+An abstraction over the declaration of HttpClient Because we want to prevent tight coupling to HttpClient, we will need an abstraction over it.</description>
+    </item>
     
     <item>
       <title>You&#39;ve been using the HttpClient incorrectly</title>
@@ -23,6 +33,16 @@
 &lt;li&gt;We&amp;rsquo;ve been taught to instantiate disposable objects in a using statement&lt;/li&gt;
 &lt;li&gt;The majority of the tutorials teach us the wrong way&lt;/li&gt;
 &lt;/ol&gt;</description>
+    </item>
+    
+    <item>
+      <title>Learn how to write testable code in C# in only 15 minutes</title>
+      <link>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</link>
+      <pubDate>Sat, 19 Sep 2020 20:55:12 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/blog/learn-how-to-write-testable-code-in-only-15-minutes/</guid>
+      <description>&lt;h2 id=&#34;why-you-should-want-to-unit-test&#34;&gt;Why you should want to unit test&lt;/h2&gt;
+&lt;p&gt;As an application grows, it becomes harder and harder to do manual testing. At some point the effort that goes into it simply becomes too much. The solution to this problem is automated testing. There are various types of automated tests, but in this course we will focus on unit tests.&lt;/p&gt;</description>
     </item>
     
   </channel>

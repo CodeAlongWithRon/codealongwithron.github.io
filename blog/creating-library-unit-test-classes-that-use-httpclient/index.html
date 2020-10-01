@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>Creating a library to unit test classes that use an HttpClient - Code along with Ron</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?v=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v=1">
+  <link rel="manifest" href="/favicon/site.webmanifest?v=1">
+  
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg?v=1" color="#ffffff">
+    <link rel="shortcut icon" href="/favicon/favicon.ico?v=1">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml?v=1">
+  
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="Creating a library to unit test classes that use an HttpClient">
+<meta itemprop="description" content="Unit testing classes that use an HttpClient can be a pain. Along the years I&#39;ve seen various ways of dealing with this pain: varying from the creation of custom wrappers over HttpClient to not testing these classes at all. In this course I will show you there&#39;s a pretty easy way to achieve this by gaining an understanding of how the HttpClient was created and how to make use of that.">
+<meta itemprop="datePublished" content="2020-09-29T15:00:46+02:00" />
+<meta itemprop="dateModified" content="2020-09-29T15:00:46+02:00" />
+<meta itemprop="wordCount" content="1289">
+
+
+
+<meta itemprop="keywords" content="C#,.NET Core,HttpClient,IHttpClientFactory,Moq," />
+<meta property="og:title" content="Creating a library to unit test classes that use an HttpClient" />
+<meta property="og:description" content="Unit testing classes that use an HttpClient can be a pain. Along the years I&#39;ve seen various ways of dealing with this pain: varying from the creation of custom wrappers over HttpClient to not testing these classes at all. In this course I will show you there&#39;s a pretty easy way to achieve this by gaining an understanding of how the HttpClient was created and how to make use of that." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codealongwithron.github.io/blog/creating-library-unit-test-classes-that-use-httpclient/" />
+<meta property="article:published_time" content="2020-09-29T15:00:46+02:00" />
+<meta property="article:modified_time" content="2020-09-29T15:00:46+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Creating a library to unit test classes that use an HttpClient"/>
+<meta name="twitter:description" content="Unit testing classes that use an HttpClient can be a pain. Along the years I&#39;ve seen various ways of dealing with this pain: varying from the creation of custom wrappers over HttpClient to not testing these classes at all. In this course I will show you there&#39;s a pretty easy way to achieve this by gaining an understanding of how the HttpClient was created and how to make use of that."/>
+<link rel="stylesheet" href="/css/bundle.min.82b2a8eac446c665e1f5edb46f56a383cf5a4e0537f9abacd046b8b21389da7c.css" integrity="sha256-grKo6sRGxmXh9e20b1ajg89aTgU3&#43;aus0Ea4shOJ2nw="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          Blog
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f&amp;title=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f&amp;title=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f&amp;description=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://codealongwithron.github.io/img/main/logo.jpg" class="circle" width="100" alt="Code along with Ron" /></a>
+  <header>
+    <h1>Code along with Ron</h1>
+  </header>
+  <main>
+    <p>Teaching what I learned and learning as I teach</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/CodeAlongWithRon" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//youtube.com/channel/UCJXeiLKL3B56LhdVUq8iIlw" target="_blank" rel="noopener" title="YouTube" class="fab fa-youtube"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/creating-library-unit-test-classes-that-use-httpclient/">Creating a library to unit test classes that use an HttpClient</a></h2>
+    
+    
+      <p>Unit testing classes that use an HttpClient can be a pain. Along the years I&#39;ve seen various ways of dealing with this pain: varying from the creation of custom wrappers over HttpClient to not testing these classes at all. In this course I will show you there&#39;s a pretty easy way to achieve this by gaining an understanding of how the HttpClient was created and how to make use of that.</p>
+    
+  </div>
+  <div class="meta">
+    <time datetime="2020-09-29 15:00:46 &#43;0200 CEST">September 29, 2020</time>
+    
+    <p>7-Minute Read</p>
+  </div>
+</header>
+
+    <div id="socnet-share">
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f&amp;title=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f&amp;title=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f&amp;description=Creating%20a%20library%20to%20unit%20test%20classes%20that%20use%20an%20HttpClient" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreating-library-unit-test-classes-that-use-httpclient%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </div>
+    <div class="content">
+      
+      <p>Let&rsquo;s very briefly start with the basics of unit testing: in order to effectively write unit tests, we want our classes to be loosely coupled. To achieve loose coupling, we make use of dependency injection. To learn more about writing testable code, make sure to read my post <em><a href="/blog/learn-how-to-write-testable-code-in-only-15-minutes/">Learn how to write testable code in C# in only 15 minutes</a></em>.</p>
+<h2 id="an-abstraction-over-the-declaration-of-httpclient">An abstraction over the declaration of HttpClient</h2>
+<p>Because we want to prevent tight coupling to HttpClient, we will need an abstraction over it. This way we can inject the abstraction in the constructor, which allows us to replace it with a mock for our unit tests.</p>
+<p>If you will be working with .NET Core 2.1 or a newer version of .NET Core it is not required to create a custom abstraction. The IHttpClientFactory is perfectly suited:</p>
+<p><img src="/img/2020/9/29/ihttpclientfactory.png" alt="IHttpClientFactory class"></p>
+<h3 id="creating-a-custom-httpclient-factory">Creating a custom HttpClient factory</h3>
+<p>If you do not use .NET Core or if you use an older version than 2.1 we are required create our own abstraction. Let&rsquo;s keep this in line with IHttpClientFactory:</p>
+<p><img src="/img/2020/9/30/icustomhttpclientfactory.png" alt="ICustomHttpClientFactory class"></p>
+<p>For the implementation we want to create a static instance of HttpClient (if you would like to know why this needs to be static, make sure to read <em><a href="/blog/youve-been-using-the-httpclient-incorrectly/">You&rsquo;ve been using HttpClient incorrectly</a></em>). This instance will then be return by the CreateClient method.</p>
+<pre><code>internal class CustomHttpClientFactory : ICustomHttpClientFactory
+{
+   private static readonly HttpClient _httpClient = new HttpClient();
+
+   public HttpClient CreateClient()
+   {
+      return _httpClient;
+   }
+}
+</code></pre>
+<p>We can use a mocking framework of choice to create a mock for the I(Custom)HttpClientFactory. We can then provide an HttpClient from the unit test to the setup for the mock&rsquo;s CreateClient method. By doing so we have control over the HttpClient that gets returned.</p>
+<h2 id="getting-control-over-the-response-from-httpclient">Getting control over the response from HttpClient</h2>
+<p>So far so good, but how do we get control over the HttpResponseMessage that is returned by the various REST methods of the HttpClient? To find this out, we need to know about the internals of the HttpClient.</p>
+<p><img src="/img/2020/9/30/httpclient.png" alt="HttpClient class"></p>
+<p>As you can see in the class diagram above, HttpClient contains two constructors: one parameterless constructor and one constructor that takes an input parameter of type HttpMessageHandler.</p>
+<p>If the parameterless constructor is called, an instance of an HttpClientHandler is created internally. This is then passed to the other constructor, which is possible because HttpClientHandler extends HttpMessageHandler. Eventually the handler is passed to the HttpMessageInvoker and that is where the handler is executed and the HttpResponseMessage is returned.</p>
+<p>The HttpClientHandler performs the actual web requests. Because we do not want the web requests to be performed for our unit tests, we know the parameterless constructor is not suitable to get control over the returned HttpResponseMessage.</p>
+<p>But what if we create a custom implementation of an HttpMessageHandler and provide that to the HttpClient? The HttpMessageHandler class looks as follows:</p>
+<p><img src="/img/2020/9/30/httpmessagehandler.png" alt="HttpMessageHandler class"></p>
+<p>This is something that we can work with! We simply have to override the SendAsync method and make it return an HttpResponseMessage. The response message can be provided through the constructor and then be returned by SendAsync.</p>
+<p><img src="/img/2020/9/30/mockhttpmessagehandler.png" alt="MockHttpMessageHandler class"></p>
+<h2 id="implementing-the-mockhttpmessagehandler">Implementing the MockHttpMessageHandler</h2>
+<p>Now that we have a clear view of what we want to achieve and how we want to do it, let&rsquo;s start writing some code. Let&rsquo;s begin with the MockHttpMessageHandler that we just modeled:</p>
+<pre><code>public class MockHttpMessageHandler : HttpMessageHandler
+{
+   private readonly HttpResponseMessage _httpResponseMessage;
+
+   public MockHttpMessageHandler(HttpResponseMessage httpResponseMessage)
+   {
+      _httpResponseMessage = httpResponseMessage;
+   }
+
+   protected override Task&lt;HttpResponseMessage&gt; SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+   {
+      return Task.FromResult(_httpResponseMessage);
+   }
+}
+</code></pre>
+<h2 id="creating-a-unit-test">Creating a unit test</h2>
+<p>Everything is in place now to test a class that uses an HttpClient. Let&rsquo;s say we want to test the following class:</p>
+<pre><code>public class PseudoCodeClient
+{
+   private readonly ICustomHttpClientFactory _httpClientFactory;
+
+   public PseudoCodeClient(ICustomHttpClientFactory httpClientFactory)
+   {
+      _httpClientFactory = httpClientFactory;
+   }
+
+   public async Task&lt;bool&gt; ReturnsOkResponseAsync()
+   {
+      var client = _httpClientFactory.CreateClient();
+      var response = await client.GetAsync(&quot;http://www.api.com&quot;);
+
+      return response.IsSuccessStatusCode;
+   }
+}
+</code></pre>
+<p>You can see that it performs a GET request to an api using the client that is created by the factory. Lastly it returns whether or not the response has a success status code. Pretty straightforward, but suitable nonetheless to test if we can get control over the response from HttpClient. Let&rsquo;s start with the creation of a unit test that checks if true is returned if the response has a success status code:</p>
+<pre><code>[Fact]
+public async Task ReturnsOkResponse_ClientReturnsOkResponse_ReturnsTrue()
+{
+   // Arrange
+   var factory = new Mock&lt;ICustomHttpClientFactory&gt;();
+   var messageHandler = new MockHttpMessageHandler(new HttpResponseMessage(HttpStatusCode.OK));
+   var httpClient = new HttpClient(messageHandler);
+
+   factory
+      .Setup(f =&gt; f.CreateClient())
+      .Returns(httpClient);
+
+   var client = new PseudoCodeClient(factory.Object);
+
+   // Act
+   var result = await client.ReturnsOkResponseAsync();
+
+   // Assert
+   Assert.True(result);
+}
+</code></pre>
+<p>If we disect that arrange part of the test, we see that we start with the creation of a mock for ICustomHttpClientFactory. I use Moq for the creation of mocks, but there are various alternatives that you could also use. We then create an instance of our MockHttpMessageHandler and pass this to the constructor of the HttpClient. What follows is the setup of the CreateClient method so it returns the HttpClient. Lastly we create an instance of PseudoCodeClient, injecting the mock into its constructor.</p>
+<p>The scenario where we test if false is returned if a non success status code is returned by HttpClient is pretty similar:</p>
+<pre><code>[Fact]
+public async Task ReturnsOkResponse_ClientReturnsBadRequestResponse_ReturnsFalsee()
+{
+   // Arrange
+   var factory = new Mock&lt;ICustomHttpClientFactory&gt;();
+   var messageHandler = new MockHttpMessageHandler(new HttpResponseMessage(HttpStatusCode.BadRequest));
+   var httpClient = new HttpClient(messageHandler);
+
+   factory
+      .Setup(f =&gt; f.CreateClient())
+      .Returns(httpClient);
+
+   var client = new PseudoCodeClient(factory.Object);
+
+   // Act
+   var result = await client.ReturnsOkResponseAsync();
+
+   // Assert
+   Assert.False(result);
+}
+</code></pre>
+<h2 id="improving-the-user-friendliness">Improving the user friendliness</h2>
+<p>Although we have achieved our main goal of being able to unit test classes that use an HttpClient, the way it is done is not really user friendly. For every test an instance of MockHttpMessageHandler has to be created, with an instance of HttpResponseMessage in its constructor and then it needs to be passed to the HttpClient. Wouldn&rsquo;t it be better to create a factory that helps us with the creation of HttpClients? In PseudoCodeClient we are only interested in the status code of the response. What if we would add a method to the factory that takes a status code as input, and let the factory create the HttpClient internally?</p>
+<p><img src="/img/2020/9/30/mockhttpclientfactory.png" alt="MockHttpClientFactory class"></p>
+<p>Now we provide the user with the flexibility to provide an HttpResponseMessage, but also to simply provide an HttpStatusCode. The code looks like this:</p>
+<pre><code>public static class MockHttpClientFactory
+{
+   public static HttpClient Build(HttpResponseMessage responseMessage)
+   {
+      return new HttpClient(new MockHttpMessageHandler(responseMessage));
+   }
+
+   public static HttpClient Build(HttpStatusCode statusCode)
+   {
+      return Build(new HttpResponseMessage(statusCode));
+   }
+}
+</code></pre>
+<p>Now we can refactor the unit tests so they use the MockHttpClientFactory:</p>
+<pre><code>[Fact]
+public async Task ReturnsOkResponse_ClientReturnsOkResponse_ReturnsTrue()
+{
+   // Arrange
+   var httpClient = MockHttpClientFactory.Create(HttpStatusCode.OK);
+
+   factory
+      .Setup(f =&gt; f.CreateClient())
+      .Returns(httpClient);
+
+   var client = new PseudoCodeClient(factory.Object);
+
+   // Act
+   var result = await client.ReturnsOkResponseAsync();
+
+   // Assert
+   Assert.True(result);
+}
+</code></pre>
+<p>That is more like it. Compact, easy and thus user friendly. Let&rsquo;s add a couple more overloads, so we can also easily provide a response string and a response object:</p>
+<p><img src="/img/2020/9/30/mockhttpclientfactoryfinal.png" alt="MockHttpClientFactory class"></p>
+<pre><code>public static HttpClient Build(HttpStatusCode statusCode, string responseString)
+{
+   var responseMessage = new HttpResponseMessage
+   {
+      Content = new StringContent(responseString),
+      StatusCode = statusCode
+   };
+
+   return Build(responseMessage);
+}
+
+public static HttpClient Build&lt;T&gt;(HttpStatusCode statusCode, T responseObject)
+{
+   try
+   {
+      var responseString = JsonConvert.SerializeObject(responseObject);
+      return Build(statusCode, responseString);
+   }
+   catch (JsonSerializationException)
+   {
+      throw new ArgumentException(&quot;The provided response object could not be serialized.&quot;);
+   }
+}
+</code></pre>
+<h2 id="wrapping-things-up">Wrapping things up</h2>
+<p>And there we have it: a user friendly library to test classes that use HttpClient. To really make it usable, we will need to create a NuGet package for it. That way we can easily incorporate it within various unit testing projects. In my next post I will show you how to create a NuGet package and how to publish it to both nuget.org and to a custom NuGet feed. I will do this by setting up an automated build pipeline. Make sure you stay tuned for the next post!</p>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/.net-core/">.NET Core</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/unit-testing/">Unit testing</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/.net-core/">.NET Core</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/httpclient/">HttpClient</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/ihttpclientfactory/">IHttpClientFactory</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/moq/">Moq</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+    
+      <a href="/blog/youve-been-using-the-httpclient-incorrectly/" class="button right"><span>You&#39;ve been using the HttpClient incorrectly</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        
+      </ul>
+  
+  <p class="copyright">
+    © 2020 Code along with Ron
+      <br>
+    
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.b4e669fa428a81defb8af0916c53f39cd1b8e0bbab22199c06f0b182907ba474.js" integrity="sha256-tOZp&#43;kKKgd77ivCRbFPznNG44LurIhmcBvCxgpB7pHQ="></script>
+    <script src="/js/add-on.js"></script>
+    </div>
+  </body>
+</html>

@@ -21,14 +21,5 @@
 &lt;p&gt;As an application grows, it becomes harder and harder to do manual testing. At some point the effort that goes into it simply becomes too much. The solution to this problem is automated testing. There are various types of automated tests, but in this course we will focus on unit tests.&lt;/p&gt;</description>
     </item>
     
-    <item>
-      <title>You too can become a medior .net developer by following this course</title>
-      <link>https://codealongwithron.github.io/blog/you-too-can-become-medior-dotnet-developer-following-this-course/</link>
-      <pubDate>Fri, 21 Aug 2020 20:55:12 +0200</pubDate>
-      
-      <guid>https://codealongwithron.github.io/blog/you-too-can-become-medior-dotnet-developer-following-this-course/</guid>
-      <description></description>
-    </item>
-    
   </channel>
 </rss>

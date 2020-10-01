@@ -6,7 +6,7 @@
     <description>Recent content in Categories on Code along with Ron</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Sep 2020 16:45:24 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2020 15:00:46 +0200</lastBuildDate>
     
 	<atom:link href="https://codealongwithron.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
@@ -14,7 +14,7 @@
     <item>
       <title>.NET Core</title>
       <link>https://codealongwithron.github.io/categories/.net-core/</link>
-      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
+      <pubDate>Tue, 29 Sep 2020 15:00:46 +0200</pubDate>
       
       <guid>https://codealongwithron.github.io/categories/.net-core/</guid>
       <description></description>
@@ -23,9 +23,18 @@
     <item>
       <title>C#</title>
       <link>https://codealongwithron.github.io/categories/c#/</link>
-      <pubDate>Mon, 28 Sep 2020 16:45:24 +0200</pubDate>
+      <pubDate>Tue, 29 Sep 2020 15:00:46 +0200</pubDate>
       
       <guid>https://codealongwithron.github.io/categories/c#/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Unit testing</title>
+      <link>https://codealongwithron.github.io/categories/unit-testing/</link>
+      <pubDate>Tue, 29 Sep 2020 15:00:46 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/categories/unit-testing/</guid>
       <description></description>
     </item>
     

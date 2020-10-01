@@ -6,10 +6,20 @@
     <description>Recent content in IHttpClientFactory on Code along with Ron</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Mon, 28 Sep 2020 16:45:24 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 29 Sep 2020 15:00:46 +0200</lastBuildDate>
     
 	<atom:link href="https://codealongwithron.github.io/tags/ihttpclientfactory/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Creating a library to unit test classes that use an HttpClient</title>
+      <link>https://codealongwithron.github.io/blog/creating-library-unit-test-classes-that-use-httpclient/</link>
+      <pubDate>Tue, 29 Sep 2020 15:00:46 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/blog/creating-library-unit-test-classes-that-use-httpclient/</guid>
+      <description>Let&amp;rsquo;s very briefly start with the basics of unit testing: in order to effectively write unit tests, we want our classes to be loosely coupled. To achieve loose coupling, we make use of dependency injection. To learn more about writing testable code, make sure to read my post Learn how to write testable code in C# in only 15 minutes.
+An abstraction over the declaration of HttpClient Because we want to prevent tight coupling to HttpClient, we will need an abstraction over it.</description>
+    </item>
     
     <item>
       <title>You&#39;ve been using the HttpClient incorrectly</title>
