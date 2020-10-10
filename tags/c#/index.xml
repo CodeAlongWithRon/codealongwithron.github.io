@@ -6,10 +6,20 @@
     <description>Recent content in C# on Code along with Ron</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Tue, 29 Sep 2020 15:00:46 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 03 Oct 2020 19:42:36 +0200</lastBuildDate>
     
 	<atom:link href="https://codealongwithron.github.io/tags/c#/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>How to create a NuGet package and publish it using an automated build pipeline</title>
+      <link>https://codealongwithron.github.io/blog/create-nuget-package/</link>
+      <pubDate>Sat, 03 Oct 2020 19:42:36 +0200</pubDate>
+      
+      <guid>https://codealongwithron.github.io/blog/create-nuget-package/</guid>
+      <description>Where we left off in the last post In the last post we created a library that allows us to unit test classes that use HttpClient. Now we want to make this library available for future projects, by creating a NuGet package. We finished the last post with a solution consisting of three projects:
+ MockHttpClient PseudoClient PseudoClient.Tests  I have removed the two PseudoClient projects from the solution. As the name suggests they only contained pseudo code to prove that the core project worked.</description>
+    </item>
     
     <item>
       <title>Creating a library to unit test classes that use an HttpClient</title>

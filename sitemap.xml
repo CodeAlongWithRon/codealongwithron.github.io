@@ -3,37 +3,67 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://codealongwithron.github.io/tags/azure-devops/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/blog/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/c#/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/categories/c#/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/categories/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/github/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/blog/create-nuget-package/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/nuget/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/categories/nuget/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://codealongwithron.github.io/tags/</loc>
+    <lastmod>2020-10-03T19:42:36+02:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://codealongwithron.github.io/tags/.net-core/</loc>
     <lastmod>2020-09-29T15:00:46+02:00</lastmod>
   </url>
   
   <url>
     <loc>https://codealongwithron.github.io/categories/.net-core/</loc>
-    <lastmod>2020-09-29T15:00:46+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codealongwithron.github.io/blog/</loc>
-    <lastmod>2020-09-29T15:00:46+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codealongwithron.github.io/tags/c#/</loc>
-    <lastmod>2020-09-29T15:00:46+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codealongwithron.github.io/categories/c#/</loc>
-    <lastmod>2020-09-29T15:00:46+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codealongwithron.github.io/categories/</loc>
-    <lastmod>2020-09-29T15:00:46+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codealongwithron.github.io/</loc>
     <lastmod>2020-09-29T15:00:46+02:00</lastmod>
   </url>
   
@@ -54,11 +84,6 @@
   
   <url>
     <loc>https://codealongwithron.github.io/tags/moq/</loc>
-    <lastmod>2020-09-29T15:00:46+02:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://codealongwithron.github.io/tags/</loc>
     <lastmod>2020-09-29T15:00:46+02:00</lastmod>
   </url>
   

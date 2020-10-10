@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-179388238-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+
+  <meta charset="utf-8">
+<title>How to create a NuGet package and publish it using an automated build pipeline - Code along with Ron</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png?v=1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png?v=1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png?v=1">
+  <link rel="manifest" href="/favicon/site.webmanifest?v=1">
+  
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg?v=1" color="#ffffff">
+    <link rel="shortcut icon" href="/favicon/favicon.ico?v=1">
+    <meta name="msapplication-config" content="/favicon/browserconfig.xml?v=1">
+  
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="theme-color" content="#ffffff">
+
+<meta name="generator" content="Hugo 0.74.3" /><meta itemprop="name" content="How to create a NuGet package and publish it using an automated build pipeline">
+<meta itemprop="description" content="In this article I will teach you how to publish a NuGet package to nuget.org using an automated build pipeline in Azure DevOps.">
+<meta itemprop="datePublished" content="2020-10-03T19:42:36+02:00" />
+<meta itemprop="dateModified" content="2020-10-03T19:42:36+02:00" />
+<meta itemprop="wordCount" content="2274">
+
+
+
+<meta itemprop="keywords" content="C#,NuGet,Azure DevOps,Github," />
+<meta property="og:title" content="How to create a NuGet package and publish it using an automated build pipeline" />
+<meta property="og:description" content="In this article I will teach you how to publish a NuGet package to nuget.org using an automated build pipeline in Azure DevOps." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://codealongwithron.github.io/blog/create-nuget-package/" />
+<meta property="article:published_time" content="2020-10-03T19:42:36+02:00" />
+<meta property="article:modified_time" content="2020-10-03T19:42:36+02:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="How to create a NuGet package and publish it using an automated build pipeline"/>
+<meta name="twitter:description" content="In this article I will teach you how to publish a NuGet package to nuget.org using an automated build pipeline in Azure DevOps."/>
+<link rel="stylesheet" href="/css/bundle.min.82b2a8eac446c665e1f5edb46f56a383cf5a4e0537f9abacd046b8b21389da7c.css" integrity="sha256-grKo6sRGxmXh9e20b1ajg89aTgU3&#43;aus0Ea4shOJ2nw="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          Blog
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about/" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog/" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories/" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f&amp;title=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f&amp;title=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f&amp;description=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="https://codealongwithron.github.io/img/main/logo.jpg" class="circle" width="100" alt="Code along with Ron" /></a>
+  <header>
+    <h1>Code along with Ron</h1>
+  </header>
+  <main>
+    <p>Teaching what I learned and learning as I teach</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        <li><a href="//github.com/CodeAlongWithRon" target="_blank" rel="noopener" title="GitHub" class="fab fa-github"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//youtube.com/channel/UCJXeiLKL3B56LhdVUq8iIlw" target="_blank" rel="noopener" title="YouTube" class="fab fa-youtube"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article class="post">
+    <header>
+  <div class="title">
+    
+      <h2><a href="/blog/create-nuget-package/">How to create a NuGet package and publish it using an automated build pipeline</a></h2>
+    
+    
+      <p>In this article I will teach you how to publish a NuGet package to nuget.org using an automated build pipeline in Azure DevOps.</p>
+    
+  </div>
+  <div class="meta">
+    <time datetime="2020-10-03 19:42:36 &#43;0200 CEST">October 3, 2020</time>
+    
+    <p>11-Minute Read</p>
+  </div>
+</header>
+
+    <div id="socnet-share">
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline&amp;url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+      <a href="//www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f" target="_blank" rel="noopener" class="nav share-btn facebook">
+        <p>Facebook</p>
+        </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f&amp;title=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f&amp;title=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="//www.pinterest.com/pin/create/button/?url=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f&amp;description=How%20to%20create%20a%20NuGet%20package%20and%20publish%20it%20using%20an%20automated%20build%20pipeline" target="_blank" rel="noopener" class="nav share-btn pinterest">
+          <p>Pinterest</p>
+        </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by %7b%20%20%20%20%20%20%20%20map%5b%5d%7d&amp;body=https%3a%2f%2fcodealongwithron.github.io%2fblog%2fcreate-nuget-package%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </div>
+    <div class="content">
+      
+      <h2 id="where-we-left-off-in-the-last-post">Where we left off in the last post</h2>
+<p>In the <a href="/blog/creating-library-unit-test-classes-that-use-httpclient">last post</a> we created a library that allows us to unit test classes that use HttpClient. Now we want to make this library available for future projects, by creating a NuGet package. We finished the last post with a solution consisting of three projects:</p>
+<ul>
+<li>MockHttpClient</li>
+<li>PseudoClient</li>
+<li>PseudoClient.Tests</li>
+</ul>
+<p>I have removed the two PseudoClient projects from the solution. As the name suggests they only contained pseudo code to prove that the core project worked. Afterwards I created a <a href="https://github.com/CodeAlongWithRon/MockHttpClient">repository</a> for the solution at GitHub and pushed the code to it.</p>
+<h2 id="considerations-to-make-when-creating-a-nuget-package">Considerations to make when creating a NuGet package</h2>
+<p>When you decide to create a NuGet package, it is important to think about the audience for your package. The work that you put into your package might be significantly less if you are the only one using it, compared to when you publish it to a public feed like nuget.org.</p>
+<p>When you add a package to nuget.org you might want to document your code, write a changelog and add a readme. If you are the only consumer of the package, the overhead is not worth the effort, because you know the internals of the code.</p>
+<h2 id="documentation">Documentation</h2>
+<p>We are going to publish our library to nuget.org, so let&rsquo;s take some time to think about how we want to inform users on how to use the library.</p>
+<h3 id="documenting-public-classes-and-methods">Documenting public classes and methods</h3>
+<p>The first thing we should do, is to document the public classes and methods. The reason that we only write documentation for the public classes, is because only these classes will be exposed to users of the package.</p>
+<h3 id="adding-a-readme-to-the-repository">Adding a readme to the repository</h3>
+<p>Another thing that I like to do for public repositories is to add a readme that lists the methods provided by the package and an example to go along with it.</p>
+<h2 id="providing-support-for-dependency-injection-di">Providing support for dependency injection (DI)</h2>
+<p>We created an abstraction over the declaration of HttpClient in our last post. For this we created the interface named ICustomHttpClientFactory and the implementation CustomHttpClientFactory. Because CustomHttpClientFactory is an internal class, we need to think about how we want to make it possible for users of the library to register the dependency.</p>
+<h3 id="registering-dependencies-within-the-package">Registering dependencies within the package</h3>
+<p>When I create a private NuGet package at the company I work for, I add a DependencyRegistration class within the library itself. This class handles the registration of the dependency for the DI container we work with across all teams. The container we use is the default one that is part of .NET Core, so an example of DependencyRegistration would be like this:</p>
+<pre><code>public static class DependencyRegistration
+{
+    public static void RegisterDependencies(IServiceCollection services)
+    {
+        services.AddSingleton&lt;ICustomHttpClientFactory, CustomHttpClientFactory&gt;();
+    }
+}
+</code></pre>
+<p>This is fine when you know that all the potential users of your package will be using the same DI container. In our current situation, where we publish a package to nuget.org, we have no idea of the DI container being used though. Therefore the example above would not suffice, because we would limit the package to users of the default .Net Core DI container.</p>
+<p>One way to work around this would be to create specific registration methods for other DI containers. Although this would increase the amount of potential users, you still deny users that use a DI container for which you did not create a registration method. Also the creation of multiple registration methods is a tedious job that I am <strong>WAY</strong> to lazy for.</p>
+<h3 id="registering-dependencies-outside-the-package">Registering dependencies outside the package</h3>
+<p>Another solution is to make CustomHttpClientFactory public. This way we can shift the responsibility of registering the depency to the consumer of the package. The big advantage that it brings, is that it allows every user to use the library, regardless of the DI container they use. It also minimizes the work you have to do as creator of the package, because it is no longer required to create a dependency registration class.</p>
+<p>One of the disadvantages is that the registration of the dependency is more error prone, because the user needs to do the registration. Another disadvantage is that the implementation of the interface will be exposed to the outside world. We usually want to avoid this, unless we have a good reason to expose it. So do we consider this scenario a good enough reason to make the implementation public? If you ask me, it sure is. Making implementations internal is not a religion, it is simply a good practice in a lot of scenario&rsquo;s. In no way it is mandatory to always do this.</p>
+<p>With that out of the way, let&rsquo;s change the visibility modifier of CustomHttpClientFactory to public.</p>
+<h2 id="describing-the-package">Describing the package</h2>
+<p>Describing the package can be done by manually creating a nuspec file or by configuring the package properties. If prefer the latter of the two, because I find it the easiest. To do so, I right click the MockHttpClient project, select Properties and go to the Package tab. I will describe the properties that I set and the values that I provide for them.</p>
+<p><strong>Package id</strong><br>
+The package id has to be a unique id for the feed that you are publishing to. I checked nuget.org and saw MockHttpClient was already taken, so instead I will use <em>Cawr.MockHttpClient</em>.</p>
+<p><strong>Package version</strong><br>
+For now I will keep this at <em>0.1.0.</em> This indicates that it&rsquo;s a library that&rsquo;s still in the early stages of development. Later on in this article I will describe how I handle versioning of packages.</p>
+<p><strong>Authors</strong><br>
+<em>Ron</em></p>
+<p><strong>Company</strong><br>
+<em>CodeAlongWithRon</em></p>
+<p><strong>Product</strong><br>
+I keep this in line with the name of the project, so in this case <em>MockHttpClient</em>.</p>
+<p><strong>Description</strong><br>
+This is were we describe what the package does. I came up with the following description: <em>MockHttpClient makes it possible to mock the HttpResponseMessage that is returned by HttpClient. This allows you to unit test classes that use HttpClient.</em></p>
+<p><strong>Repository URL</strong><br>
+<em><a href="https://github.com/CodeAlongWithRon/MockHttpClient">https://github.com/CodeAlongWithRon/MockHttpClient</a></em></p>
+<p><strong>Repository type</strong><br>
+<em>Git</em></p>
+<p><strong>Tags</strong><br>
+This is a space-delimited list of tags to describe the package. In this case: <em>httpclient mock mocking unittest unittesting</em></p>
+<p><strong>Release notes</strong><br>
+Here we describe the changes we added in this release. Because it is our first version I will simply write <em>First version</em>.</p>
+<h2 id="registering-an-api-key-at-nugetorg">Registering an api key at nuget.org</h2>
+<p>For our automated pipeline to be able to push a package to nuget.org, we have to make sure it is authorized. To perform the authorization, we need an API key from nuget.org. To create one, we go to nuget.org and sign in with a Microsoft account. Once we are logged in, we click our user name in the top right corner and go to API Keys.</p>
+<p><img src="/img/2020/10/6/create-nuget-api-key.jpg" alt="Create NuGet API Key"></p>
+<p>If we click Create, we get to configure the key. The only thing we have to set is the Key Name and the Glob Pattern. The other default settings are fine. The key name we will use is <em>AzureDevopsKey</em> and for the Glob Pattern I will use *. The asterisk means that the api key will be able to perform the selected scopes for all packages. Once the key is created, make sure to copy it, because once that page is closed it will no longer be available.</p>
+<h2 id="setting-up-a-build-pipeline-in-azure-devops">Setting up a build pipeline in Azure DevOps</h2>
+<p>For my automated build and release pipelines I use Azure DevOps. I already have an organisation named <em>CodeAlongWithRon</em> and also a project named <em>Nuget packages</em>. For the creation of the NuGet package we only create a build pipeline, so that is where our focus will be.</p>
+<h3 id="authorizing-azure-devops-to-push-packages-to-nugetorg">Authorizing Azure DevOps to push packages to nuget.org</h3>
+<p>Before we begin with the creation of a pipeline, let&rsquo;s create a service connection so our pipeline will be authorized to access nuget.org. To do this, go to the project settings (see the black rectangle for the location of the link):</p>
+<p><img src="/img/2020/10/6/project-settings-link.jpg" alt="Project settings link"></p>
+<p>We go to service connections, which is listed under the Pipelines header. Then we create a new service connection and select NuGet from the list.</p>
+<p>We select ApiKey as the authentication method and use the provide the following Feed URL: <em><a href="https://api.nuget.org/v3/index.json">https://api.nuget.org/v3/index.json</a></em>. In the ApiKey input field we paste the key we generated at nuget.org and the last thing we do is to provide a name for the service connection. I will simply name it <em>CodeAlongWithRonNuget</em>.</p>
+<h3 id="creating-the-pipeline">Creating the pipeline</h3>
+<p>Now that we have the service connection in place, let&rsquo;s continue with the creation of the pipeline. Because we do not yet have any pipeline, we see the following screen:</p>
+<p><img src="/img/2020/10/6/create-pipeline.jpg" alt="Create build pipeline"></p>
+<p>Clicking the <em>Create Pipeline</em> button allows us to specify where the code is hosted, which is GitHub in our case. We now have to grant the pipeline access to the GitHub repository:</p>
+<p><img src="/img/2020/10/6/authorize-pipeline.jpg" alt="Authorize pipeline"></p>
+<p>After clicking the Authorize AzurePipelines button, we have to enter the password for the GitHub account and then we can select the repository we want to grant access to. We select CodeAlongWithRon/MockHttpClient and walk through the next authorization steps in the flow.</p>
+<p>Next we get to see the <em>Configure your pipeline</em> step, where we select Starter pipeline. We are now able to configure the steps that we want the pipeline to perform. In our case we want the following steps to be performed:</p>
+<ul>
+<li>Build the solution</li>
+<li>Create the package</li>
+<li>Publish the package</li>
+</ul>
+<p>This results in the following YAML file:</p>
+<pre><code># If a commit is pushed to the main branch of the Git repository, this build will automatically run
+trigger:
+- main
+
+# Run this pipeline on a build agent containing the latest version of ubuntu
+pool:
+vmImage: 'ubuntu-latest'
+
+# Here we define variables that we want to use
+variables:
+buildConfiguration: 'Release'
+
+steps:
+
+# Builds a release version of all projects that exist in a subfolder of the root folder
+- task: DotNetCoreCLI@2
+inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+displayName: 'Build projects'
+
+# Creates a nuget package for all projects that exist in a subfolder of the root folder, except for test projects
+- task: DotNetCoreCLI@2
+inputs:
+    command: 'pack'
+    packagesToPack: '**/*.csproj;!**/*.Tests.csproj'
+    versioningScheme: 'off'
+displayName: 'Create package'
+
+# Pushes all nuget packages that were created to nuget.org and uses the service connection named CodeAlongWithRonNuget to do so
+- task: NuGetCommand@2
+inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;!$(Build.ArtifactStagingDirectory)/*.symbols.nupkg'
+    nuGetFeedType: 'external'
+    publishFeedCredentials: 'CodeAlongWithRonNuget'
+displayName: 'Push package to nuget.org'
+</code></pre>
+<p>Now that the pipeline is configured, we can save and run the pipeline to push the package to nuget.org and the private feed. In the dialog that appears we can decide whether we want to push the YAML file to the main branch or if we want to create a new branch based on the main branch. Let&rsquo;s simply choose to add the file to the main branch and then wait for the pipeline to run. After a bit of waiting, we see that the pipeline successfully ran and that the package was added to both feeds.</p>
+<h2 id="adding-new-functionality-to-the-package">Adding new functionality to the package</h2>
+<p>Now let&rsquo;s say we want to add some more overloads for the Create method of MockHttpClientFactory:</p>
+<p><img src="/img/2020/10/6/mockhttpclientfactory-updated.png" alt="MockHttpClientFactory updated"></p>
+<p>The implementation looks like this:</p>
+<pre><code>public static HttpClient Build(HttpStatusCode statusCode, string responseString)
+{
+   var responseMessage = new HttpResponseMessage
+   {
+      Content = new StringContent(responseString),
+      StatusCode = statusCode
+   };
+
+   return Build(responseMessage);
+}
+
+public static HttpClient Build&lt;T&gt;(HttpStatusCode statusCode, T responseObject)
+{
+   try
+   {
+      var responseString = JsonConvert.SerializeObject(responseObject);
+      return Build(statusCode, responseString);
+   }
+   catch (JsonSerializationException)
+   {
+      throw new ArgumentException(&quot;The provided response object could not be serialized.&quot;);
+   }
+}
+</code></pre>
+<h3 id="versioning-the-package">Versioning the package</h3>
+<p>Now that we have an updated version of the library, we want to publish it to the NuGet feeds again. To do this, we are required to update the package version in the project properties. We also want to update the release notes, so users of our library get to know about the changes in this version. But before we move to the release notes, let&rsquo;s first take some time to think about how we want to deal with the versioning of the package.</p>
+<p>Let&rsquo;s start by stating that there are a lot of ways to handling versioning. Stating that one specific way is the good way and all others are the incorrect way is ignorant. The versioning system that I prefer is <a href="https://semver.org/">semantic versioning</a> where we work with major.minor.patch. Our current version 0.1.0 is also created according to this system. But when do we update which number?</p>
+<p>If we have only done backward compatible bug fixes and did not add any new functionality, we increase the revision number by one.
+If we added new functionality that is backward compatible, we increase the minor number by one.
+If we introduced breaking changes, we increase the major number by one. Another scenario where we increase the major is if we go from a beta version to a release version.</p>
+<p>Because we added new functionality that is backward compatible, we will up the minor, so our new version number will be 0.2.0.</p>
+<p>For the release notes we&rsquo;ll write: <em>Added new overloads for the Create method to MockHttpClientFactory so we can easily provide a response string or object.</em></p>
+<p>Lastly we also need to update the readme, so it contains the newly created overloads.</p>
+<h3 id="publishing-the-updated-library">Publishing the updated library</h3>
+<p>Now that we have updated our library, we want to push it to our NuGet feeds again. Because the automated build pipeline is in place, the only thing we need to do is to push our commit to the main branch. This will trigger the pipeline and results in the new version being published to the feeds.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>With the lessons you learned in this post, you should now be able to create and manage your own NuGet packages. If you have any questions or comments, do not hesitate to ask them in the comments below. Also if you created you own public NuGet package, feel free to share it. I am very interested to see what you have created!</p>
+
+    </div>
+    <footer>
+      <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/nuget/">NuGet</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/c/">C#</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/nuget/">NuGet</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/azure-devops/">Azure DevOps</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/github/">Github</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+    </footer>
+  </article>
+  
+    
+
+  
+  <div class="pagination">
+    
+    
+      <a href="/blog/creating-library-unit-test-classes-that-use-httpclient/" class="button right"><span>Creating a library to unit test classes that use an HttpClient</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+
+  
+
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        
+      </ul>
+  
+  <p class="copyright">
+    © 2020 Code along with Ron
+      <br>
+    
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.initHighlightingOnLoad();</script><script src="/js/bundle.min.b4e669fa428a81defb8af0916c53f39cd1b8e0bbab22199c06f0b182907ba474.js" integrity="sha256-tOZp&#43;kKKgd77ivCRbFPznNG44LurIhmcBvCxgpB7pHQ="></script>
+    <script src="/js/add-on.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-179388238-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    </div>
+  </body>
+</html>
